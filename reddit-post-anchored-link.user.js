@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Post Anchored Link
-// @version     0.1.1
+// @version     0.1.2
 // @description Adds a button per post to represent an anchored link (like the parent button) derived from a permalink
 // @license     MIT
 // @author      Nguyen Duc My
@@ -21,8 +21,10 @@ function addPostButtons() {
     var buttonLists = document.getElementsByClassName("flat-list buttons");
     for (var i = 1; i < buttonLists.length; ++i) {
         var list = buttonLists[i];
-        var commentId = getCommentId(list);
-        addButton(list, commentId);
+        if (list.children.length > 0) {
+            var commentId = getCommentId(list);
+            addButton(list, commentId);
+        }
     }
 }
 
