@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Post Anchored Link
-// @version     0.1.2
+// @version     0.1.3
 // @description Adds a button per post to represent an anchored link (like the parent button) derived from a permalink
 // @license     MIT
 // @author      Nguyen Duc My
