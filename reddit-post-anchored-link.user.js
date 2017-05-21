@@ -13,15 +13,42 @@
 (function () {
     'use strict';
 
-    addPostButtons();
+    addInitialPostLinkButtons();
+    addDomObserversToMoreComments();
 })();
 
 
-function addPostButtons() {
-    var buttonLists = document.getElementsByClassName("flat-list buttons");
-    for (var i = 1; i < buttonLists.length; ++i) {
+function addInitialPostLinkButtons() {
+    tryAddPostLinkButtons(document, 1);
+}
+
+
+function addDomObserversToMoreComments() {
+    var moreComments = document.getElementsByClassName('morecomments');
+
+    var observer = new MutationObserver(function(mutations, observer) {
+        for (var i = 0; i < mutations.length; ++i) {
+            if ((mutations[i].addedNodes.length || mutations[i].removedNodes.length) && mutations[i].target.className.search('live-timestamp') < 0) {
+                console.log(mutations[i], '---', observer);
+                tryAddPostLinkButtons(mutations[i].target, 0);
+            }
+        }
+    });
+
+    for (var i = 0; i < moreComments.length; ++i) {
+        observer.observe(moreComments[i].parentElement.parentElement.parentElement, { childList: true, subtree: true });
+    }
+}
+
+
+// Common
+
+function tryAddPostLinkButtons(element, startIndex) {
+    var buttonLists = element.getElementsByClassName('flat-list buttons');
+
+    for (var i = startIndex; i < buttonLists.length; ++i) {
         var list = buttonLists[i];
-        if (list.children.length > 0) {
+        if (list.children.length > 0 && list.getElementsByClassName('userscripted').length == 0) {
             var commentId = getCommentId(list);
             addButton(list, commentId);
         }
@@ -38,10 +65,10 @@ function getCommentId(buttonList) {
 
 function addButton(buttonList, commentId) {
     var a = document.createElement('a');
-    a.setAttribute('class', 'bylink');
+    a.setAttribute('class', 'bylink userscripted');
     a.setAttribute('href', '#' + commentId);
     a.setAttribute('rel', 'nofollow');
-    a.innerHTML = "link";
+    a.innerHTML = 'link';
     var li = document.createElement('li');
     li.appendChild(a);
 
