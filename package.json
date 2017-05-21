@@ -1,0 +1,12 @@
+{
+    "name": "reddit-userscripts",
+    "version": "0.1.1",
+    "description": "Greasemonkey userscripts for Reddit",
+    "license": "MIT",
+    "repository": "hcpl/Reddit-userscripts",
+    "author": {
+        "name": "Nguyen Duc My",
+        "email": "nguyenducmy@gmail.com",
+        "url": "https://github.com/hcpl"
+    }
+}
