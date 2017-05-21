@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name        reddit-post-anchored-link
-// @namespace   reddit
+// @name        Reddit Post Anchored Link
+// @version     0.1.1
 // @description Adds a button per post to represent an anchored link (like the parent button) derived from a permalink
+// @license     MIT
+// @author      Nguyen Duc My
+// @namespace   https://github.com/hcpl
 // @match       https://www.reddit.com/r/*/comments/*
-// @version     0.1.0
 // @grant       none
 // ==/UserScript==
 

@@ -1,2 +1,2 @@
-# reddit-userscripts
+# Reddit-userscripts
 Greasemonkey userscripts for Reddit
