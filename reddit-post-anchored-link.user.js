@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Post Anchored Link
-// @version     0.1.4
+// @version     0.1.5
 // @description Adds a button per post to represent an anchored link (like the parent button) derived from a permalink
 // @license     MIT
 // @author      Nguyen Duc My
@@ -26,7 +26,7 @@ function addInitialPostLinkButtons() {
 function addDomObserversToMoreComments() {
     var moreComments = document.getElementsByClassName('morecomments');
 
-    var observer = new MutationObserver(function(mutations, observer) {
+    var observer = new MutationObserver(function(mutations, _observer) {
         for (var i = 0; i < mutations.length; ++i) {
             if (mutations[i].addedNodes.length && mutations[i].target.className.search('live-timestamp') < 0) {
                 tryAddPostLinkButtons(mutations[i].target, 0);
