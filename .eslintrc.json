@@ -4,6 +4,7 @@
         "browser": true
     },
     "rules": {
+        "eqeqeq": ["error", "always"],
         "no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_"}]
     }
 }
