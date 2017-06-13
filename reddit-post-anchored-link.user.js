@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Post Anchored Link
-// @version     0.1.6
+// @version     0.1.7
 // @description Adds a button per post to represent an anchored link (like the parent button) derived from a permalink
 // @license     MIT
 // @author      Nguyen Duc My
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-(function () {
+(function() {
     'use strict';
 
     addInitialPostLinkButtons();
