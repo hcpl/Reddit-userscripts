@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.1
-// @description Shows Imgur image when mouse is hovered over
+// @version     0.1.2
+// @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
 // @namespace   https://github.com/hcpl
@@ -56,12 +56,25 @@ function addDomObserversToMoreComments() {
 function tryAddMouseOverHandlers(element) {
     var aElements = Array.prototype.slice.call(element.getElementsByTagName("a"));
 
-    var imgurLinks = aElements.filter(function(a) {
-        return 'href' in a.attributes && a.attributes.href.value.search('imgur') > 0;
+    var imageLinks = aElements.filter(function(a) {
+        var imageExtensions = ["jpg", "jpeg", "png", "gif"];
+
+        if ('href' in a.attributes) {
+            var link = a.attributes.href.value;
+
+            for (var i = 0; i < imageExtensions.length; ++i) {
+                var ext = imageExtensions[i];
+                if (link[link.length - ext.length - 1] === '.' && link.indexOf(ext, 0) + ext.length === link.length) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     });
 
-    for (var i = 0; i < imgurLinks.length; ++i) {
-        var link = imgurLinks[i];
+    for (var i = 0; i < imageLinks.length; ++i) {
+        var link = imageLinks[i];
         link.setAttribute('class', 'tohover');
 
         var img = document.createElement('img');
