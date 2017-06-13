@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.0
+// @version     0.1.1
 // @description Shows Imgur image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -15,6 +15,7 @@
 
     addStylesheet();
     addInitialMouseOverHandlers();
+    addDomObserversToMoreComments();
 })();
 
 
@@ -29,6 +30,28 @@ function addInitialMouseOverHandlers() {
     tryAddMouseOverHandlers(document);
 }
 
+function addDomObserversToMoreComments() {
+    var moreComments = document.getElementsByClassName('morecomments');
+
+    var observer = new MutationObserver(function(mutations, _observer) {
+        for (var i = 0; i < mutations.length; ++i) {
+            if (mutations[i].addedNodes.length && mutations[i].target.className.search('live-timestamp') < 0) {
+                tryAddMouseOverHandlers(mutations[i].target);
+            }
+        }
+    });
+
+    for (var i = 0; i < moreComments.length; ++i) {
+        var entryUnvoted = moreComments[i].parentElement;
+        var thing = entryUnvoted.parentElement;
+        var sideTable = thing.parentElement;
+
+        observer.observe(sideTable, { childList: true, subtree: true });
+    }
+}
+
+
+// Common
 
 function tryAddMouseOverHandlers(element) {
     var aElements = Array.prototype.slice.call(element.getElementsByTagName("a"));
