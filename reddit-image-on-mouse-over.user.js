@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.4
+// @version     0.1.5
 // @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -14,20 +14,20 @@
     'use strict';
 
     addStylesheet();
-    addInitialMouseOverHandlers();
+    addInitialMouseOverElements();
     addDomObserversToMoreComments();
 })();
 
 
 function addStylesheet() {
     var style = document.createElement('style');
-    style.textContent = 'a.tohover img { display:none } a.tohover:hover img { display: block }';
+    style.textContent = 'a.userscripted-image-link img { display:none } a.userscripted-image-link:hover img { display: block }';
 
     document.head.appendChild(style);
 }
 
-function addInitialMouseOverHandlers() {
-    tryAddMouseOverHandlers(document);
+function addInitialMouseOverElements() {
+    tryAddMouseOverElements(document);
 }
 
 function addDomObserversToMoreComments() {
@@ -36,7 +36,7 @@ function addDomObserversToMoreComments() {
     var observer = new MutationObserver(function(mutations, _observer) {
         for (var i = 0; i < mutations.length; ++i) {
             if (mutations[i].addedNodes.length && mutations[i].target.className.search('live-timestamp') < 0) {
-                tryAddMouseOverHandlers(mutations[i].target);
+                tryAddMouseOverElements(mutations[i].target);
             }
         }
     });
@@ -53,7 +53,7 @@ function addDomObserversToMoreComments() {
 
 // Common
 
-function tryAddMouseOverHandlers(element) {
+function tryAddMouseOverElements(element) {
     var aElements = Array.prototype.slice.call(element.getElementsByTagName("a"));
 
     var imageLinks = aElements.filter(function(a) {
@@ -63,8 +63,7 @@ function tryAddMouseOverHandlers(element) {
             var link = a.attributes.href.value;
 
             for (var i = 0; i < imageExtensions.length; ++i) {
-                var ext = imageExtensions[i];
-                if (endsWith(link, ext)) {
+                if (endsWith(link, imageExtensions[i])) {
                     return true;
                 }
             }
@@ -75,7 +74,7 @@ function tryAddMouseOverHandlers(element) {
 
     for (var i = 0; i < imageLinks.length; ++i) {
         var link = imageLinks[i];
-        link.setAttribute('class', 'tohover');
+        link.classList.add('userscripted-image-link');
 
         var img = document.createElement('img');
         img.setAttribute('src', link.attributes.href.value.replace('http://', 'https://'));
