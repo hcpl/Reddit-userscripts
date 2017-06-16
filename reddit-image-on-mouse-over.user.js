@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.5
+// @version     0.1.6
 // @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -74,6 +74,10 @@ function tryAddMouseOverElements(element) {
 
     for (var i = 0; i < imageLinks.length; ++i) {
         var link = imageLinks[i];
+        if (link.getElementsByTagName('img').length > 0) {
+            continue;
+        }
+
         link.classList.add('userscripted-image-link');
 
         var img = document.createElement('img');

@@ -1,6 +1,6 @@
 {
     "name": "reddit-userscripts",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "Greasemonkey userscripts for Reddit",
     "license": "MIT",
     "repository": "hcpl/Reddit-userscripts",
