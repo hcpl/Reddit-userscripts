@@ -5,6 +5,7 @@
     },
     "rules": {
         "eqeqeq": ["error", "always"],
-        "no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_"}]
+        "no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_"}],
+        "semi": ["error", "always"]
     }
 }
