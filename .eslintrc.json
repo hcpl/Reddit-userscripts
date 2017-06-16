@@ -5,6 +5,8 @@
     },
     "rules": {
         "eqeqeq": ["error", "always"],
+        "indent": ["error", 4],
+        "no-trailing-spaces": ["error"],
         "no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_"}],
         "quotes": ["error", "single"],
         "semi": ["error", "always"]
