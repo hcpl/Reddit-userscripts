@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.6
+// @version     0.1.7
 // @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -54,10 +54,10 @@ function addDomObserversToMoreComments() {
 // Common
 
 function tryAddMouseOverElements(element) {
-    var aElements = Array.prototype.slice.call(element.getElementsByTagName("a"));
+    var aElements = Array.prototype.slice.call(element.getElementsByTagName('a'));
 
     var imageLinks = aElements.filter(function(a) {
-        var imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+        var imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
 
         if ('href' in a.attributes) {
             var link = a.attributes.href.value;
