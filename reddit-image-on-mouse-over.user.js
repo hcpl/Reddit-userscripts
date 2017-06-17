@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.8
+// @version     0.1.9
 // @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -102,5 +102,5 @@ function getImageExtensions() {
 }
 
 function endsWith(str, pattern) {
-    return str.length >= pattern.length && str.indexOf(pattern, 0) + pattern.length === str.length;
+    return str.length >= pattern.length && str.lastIndexOf(pattern) + pattern.length === str.length;
 }
