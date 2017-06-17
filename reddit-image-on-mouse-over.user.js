@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Image on Mouse Over
-// @version     0.1.7
+// @version     0.1.8
 // @description Shows an image when mouse is hovered over
 // @license     MIT
 // @author      Nguyen Duc My
@@ -52,39 +52,53 @@ function addDomObserversToMoreComments() {
 
 
 // Common
-
 function tryAddMouseOverElements(element) {
-    var aElements = Array.prototype.slice.call(element.getElementsByTagName('a'));
+    var imageExtensions = getImageExtensions();
+    var aElements = element.getElementsByTagName('a');
 
-    var imageLinks = aElements.filter(function(a) {
-        var imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    for (var i = 0; i < aElements.length; ++i) {
+        var a = aElements[i];
 
         if ('href' in a.attributes) {
             var link = a.attributes.href.value;
 
-            for (var i = 0; i < imageExtensions.length; ++i) {
-                if (endsWith(link, imageExtensions[i])) {
-                    return true;
+            for (var j = 0; j < imageExtensions.length; ++j) {
+                var ext = imageExtensions[j];
+                var needsToReplaceExt = ext.constructor === Array;
+
+                var fromExt = needsToReplaceExt ? ext[0] : ext;
+
+                if (endsWith(link, fromExt)) {
+                    if (a.getElementsByTagName('img').length > 0) {
+                        continue;
+                    }
+
+                    a.classList.add('userscripted-image-link');
+
+                    var newLink = link.replace('http://', 'https://');
+                    newLink = needsToReplaceExt ? newLink.replace(ext[2], ext[1]) : newLink;
+
+                    var img = document.createElement('img');
+                    img.setAttribute('src', newLink);
+
+                    a.appendChild(img);
                 }
             }
         }
-
-        return false;
-    });
-
-    for (var i = 0; i < imageLinks.length; ++i) {
-        var link = imageLinks[i];
-        if (link.getElementsByTagName('img').length > 0) {
-            continue;
-        }
-
-        link.classList.add('userscripted-image-link');
-
-        var img = document.createElement('img');
-        img.setAttribute('src', link.attributes.href.value.replace('http://', 'https://'));
-
-        link.appendChild(img);
     }
+}
+
+function getImageExtensions() {
+    var imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', ['.gifv', '.gif']];
+
+    for (var i = 0; i < imageExtensions.length; ++i) {
+        var ext = imageExtensions[i];
+        if (ext.constructor === Array) {
+            ext.push(new RegExp(ext[0] + '$'));
+        }
+    }
+
+    return imageExtensions;
 }
 
 function endsWith(str, pattern) {
